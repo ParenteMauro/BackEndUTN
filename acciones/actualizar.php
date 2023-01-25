@@ -47,10 +47,11 @@ try {
     <title>Actualizar Alumno</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href=".././css/style.css">
 </head>
 
 <body>
+    <img src=".././media/logo-utn.png" id="logo" alt="">
     <h1>Actualizar Alumno</h1>
 
     <a href="../index.php" class=" btn btn-success btn-lg">Volver</a>
