@@ -62,8 +62,11 @@ $alumnos = $consulta->fetchAll();
                 <td><?= $alumno['foto']?></td>
                 <td><?= $alumno['curso']?></td>
                 <td>
-                    <button class="btn btn-warning">Editar</button>
-                    <button class="btn btn-danger">Eliminar</button>
+                    <button class="btn btn-sm btn-warning">Editar</button>
+                    <form action="./acciones/eliminar.php" method="post">
+                        <input type="hidden" name="id" value=<?=$alumno['id']?>>
+                        <button type="submit" class="btn btn-sm  btn-danger">Eliminar</button>
+                    </form>
                 </td>
             </tr>
         <?php } ?>
