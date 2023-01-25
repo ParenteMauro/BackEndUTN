@@ -20,7 +20,7 @@ $consulta = $dbh->prepare("INSERT INTO `alumno`(`nombre`, `email`, `foto`, `curs
 
 $consulta->bindValue(':nombre',$_POST['nombre']); 
 $consulta->bindValue(':email',$_POST['email']); 
-$consulta->bindValue(':foto',null); 
+$consulta->bindValue(':foto', addslashes(file_get_contents($_FILES['foto']['tmp_name'])));
 $consulta->bindValue(':curso',$_POST['curso']); 
 
 $consulta->execute(); 

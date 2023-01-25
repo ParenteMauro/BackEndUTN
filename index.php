@@ -18,7 +18,14 @@ try {
 
 } 
 
-$consulta= $dbh->prepare("SELECT * FROM alumno");
+$buscar = $_GET['buscar'] ?? '';
+if($buscar){
+  $consulta = $dbh->prepare("SELECT * FROM alumno WHERE nombre LIKE :buscar");
+  $consulta->bindValue(':buscar', "%$buscar%");
+
+}else{
+  $consulta = $dbh->prepare("SELECT * FROM alumno");
+}
 
 $consulta->execute();
 
@@ -37,12 +44,17 @@ $alumnos = $consulta->fetchAll();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
 <body>
-    <img src="./media/logo-utn.png" alt="UTN-LOGO" id="logo">
+    <img id="logo" src="./media/logo-utn.png" alt="utn">
 
     <h1>Alumnos de la UTN</h1>
-
+    <br>
+    <form class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Alumno a buscar" aria-label="Recipient's username"
+            aria-describedby="button-addon2" name="buscar">
+        <button class="btn btn-info" type="submit" id="button-addon2">Buscar</button>
+    </form>
     <a href="./acciones/insertar.php" class="btn btn-success">Insertar Alumno</a>
-    <table class="table">
+    <table class="tablaResponsive">
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -59,10 +71,15 @@ $alumnos = $consulta->fetchAll();
                 <th scope="row"><?= $i+1 ?></td>
                 <td><?= $alumno['nombre']?></td>
                 <td><?= $alumno['email']?></td>
-                <td><?= $alumno['foto']?></td>
+                <td>
+                    <img style="width: 80px" src="data:image/png;base64,<?= base64_encode($alumno['foto'])?>"  alt="foto de: <?=$alumno["nombre"]?>">
+                </td>
                 <td><?= $alumno['curso']?></td>
                 <td>
-                    <button class="btn btn-sm btn-warning">Editar</button>
+                    <form action="./acciones/actualizar.php">
+                        <input type="hidden" name="id" value=<?=$alumno['id']?>>
+                        <button type="submit" class="btn btn-sm  btn-primary">Actualizar</button>
+                    </form>
                     <form action="./acciones/eliminar.php" method="post">
                         <input type="hidden" name="id" value=<?=$alumno['id']?>>
                         <button type="submit" class="btn btn-sm  btn-danger">Eliminar</button>
